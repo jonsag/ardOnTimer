@@ -30,14 +30,14 @@ void setup() {
   Serial.println();
 
   pinMode(startButtonPin, INPUT);
-  pinMode(stopButtonPin, INPUT);
+  pinMode(setButtonPin, INPUT);
   pinMode(upButtonPin, INPUT);
   pinMode(downButtonPin, INPUT);
   pinMode(buzzerPin, OUTPUT);
   pinMode(relayPin, OUTPUT);
 
   // set initial output states
-  digitalWrite(buzzerPin, buzzerState);
+  //digitalWrite(buzzerPin, buzzerState);
   digitalWrite(relayPin, relayState);
 
   lcd.clear();
@@ -49,9 +49,26 @@ void loop() {
     Read buttons
   *******************************/
   readButtons();
+  /*
+  Serial.print("Start: ");
+  Serial.print(startButtonState);
+  Serial.print(", Set: ");
+  Serial.print(setButtonState);
+  Serial.print(", Up: ");
+  Serial.print(upButtonState);
+  Serial.print(", Down: ");
+  Serial.print(downButtonState);
+*/
 
   // set the relay:
-  digitalWrite(relayPin, relayState);
+  //digitalWrite(relayPin, relayState);
+
+  /*
+  Serial.print(", Buzzer: ");
+  Serial.print(buzzerState);
+  Serial.print(", Relay: ");
+  Serial.println(relayState);
+*/
 
 
 

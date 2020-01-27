@@ -37,15 +37,15 @@ int lcdRows = 2;
    Buttons setup
  *******************************/
 const int startButtonPin = 8;
-const int stopButtonPin = 9;
+const int setButtonPin = 9;
 const int upButtonPin = 10;
 const int downButtonPin = 11;
 
 int startButtonState;             // the current reading from the start button pin
 int lastStartButtonState = LOW;
 
-int stopButtonState;             // the current reading from the stop button pin
-int lastStopButtonState = LOW;
+int setButtonState;             // the current reading from the set button pin
+int lastSetButtonState = LOW;
 
 int upButtonState;             // the current reading from the up button pin
 int lastUpButtonState = LOW;
@@ -71,10 +71,33 @@ int relayState = LOW;         // the current state of the relay pin
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
 unsigned long lastStartDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long startDebounceDelay = 50;    // the debounce time; increase if the output flickers
-unsigned long lastStopDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long stopDebounceDelay = 50;    // the debounce time; increase if the output flickers
+unsigned long lastSetDebounceTime = 0;  // the last time the output pin was toggled
 unsigned long lastUpDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long upDebounceDelay = 50;    // the debounce time; increase if the output flickers
 unsigned long lastDownDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long downDebounceDelay = 50;    // the debounce time; increase if the output flickers
+unsigned long debounceDelay = 20;    // the debounce time; increase if the output flickers
+
+/*******************************
+   Tones
+ *******************************/
+const int startTone = 1500;
+const int startLength = 200;
+const int setTone = 1500;
+const int setLength = 400;
+const int upTone = 2000;
+const int upLength = 100;
+const int downTone = 1000;
+const int downLength = 100;
+
+/*******************************
+   Tones
+ *******************************/
+ int dur = 120; // timer on time
+ const int incr = 10; // increments for counting up/down
+
+/*******************************
+   Misc
+ *******************************/
+int setMode = LOW; // set mode on/off
+
+
+ 

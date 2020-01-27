@@ -3,7 +3,7 @@
 void readButtons() {
   // read the state of the switch into a local variable:
   int startReading = digitalRead(startButtonPin);
-  int stopReading = digitalRead(stopButtonPin);
+  int setReading = digitalRead(setButtonPin);
   int upReading = digitalRead(upButtonPin);
   int downReading = digitalRead(downButtonPin);
 
@@ -12,9 +12,9 @@ void readButtons() {
     // reset the debouncing timer
     lastStartDebounceTime = millis();
   }
-  if (stopReading != lastStopButtonState) {
+  if (setReading != lastSetButtonState) {
     // reset the debouncing timer
-    lastStopDebounceTime = millis();
+    lastSetDebounceTime = millis();
   }
   if (upReading != lastUpButtonState) {
     // reset the debouncing timer
@@ -25,7 +25,7 @@ void readButtons() {
     lastDownDebounceTime = millis();
   }
 
-  if ((millis() - lastStartDebounceTime) > startDebounceDelay) {
+  if ((millis() - lastStartDebounceTime) > debounceDelay) {
     // whatever the reading is at, it's been there for longer than the debounce
     // delay, so take it as the actual current state:
 
@@ -33,28 +33,44 @@ void readButtons() {
     if (startReading != startButtonState) {
       startButtonState = startReading;
 
-      // only toggle the LED if the new button state is HIGH
+      // only toggle the relay if the new button state is HIGH
       if (startButtonState == HIGH) {
-        buzzerState = !buzzerState;
+        relayState = !relayState;
+        if (relayState == HIGH) {
+          Serial.println("Starting timer");
+          tone(buzzerPin, startTone, startLength);
+        }
+        else {
+          Serial.println("Stopping timer");
+          tone(buzzerPin, setTone, setLength);
+        }
       }
     }
   }
 
-  if ((millis() - lastStopDebounceTime) > stopDebounceDelay) {
+  if ((millis() - lastSetDebounceTime) > debounceDelay) {
     // whatever the reading is at, it's been there for longer than the debounce
     // delay, so take it as the actual current state:
 
     // if the button state has changed:
-    if (stopReading != stopButtonState) {
-      stopButtonState = stopReading;
+    if (setReading != setButtonState) {
+      setButtonState = setReading;
 
-      // only toggle the LED if the new button state is HIGH
-      //if (buttonState == HIGH) {
-      //  ledState = !ledState;
-      //}
+      // only toggle set status if the new button state is HIGH
+      if (setButtonState == HIGH && relayState == LOW) {
+        setMode = !setMode;
+        if (setMode == HIGH) {
+          Serial.println("Entering set mode");
+        }
+        else {
+          Serial.println("Exiting set mode");
+        }
+        tone(buzzerPin, setTone, setLength);
+      }
     }
   }
-  if ((millis() - lastUpDebounceTime) > upDebounceDelay) {
+
+  if ((millis() - lastUpDebounceTime) > debounceDelay) {
     // whatever the reading is at, it's been there for longer than the debounce
     // delay, so take it as the actual current state:
 
@@ -62,13 +78,16 @@ void readButtons() {
     if (upReading != upButtonState) {
       upButtonState = upReading;
 
-      // only toggle the LED if the new button state is HIGH
-      //if (buttonState == HIGH) {
-      //  ledState = !ledState;
-      //}
+      // only count up if the new button state is HIGH
+      if (upButtonState == HIGH && setMode == HIGH) {
+        dur = dur + incr;
+        Serial.print("Counting up. New timer value: ");
+        Serial.println(dur);
+        tone(buzzerPin, upTone, upLength);
+      }
     }
   }
-  if ((millis() - lastDownDebounceTime) > downDebounceDelay) {
+  if ((millis() - lastDownDebounceTime) > debounceDelay) {
     // whatever the reading is at, it's been there for longer than the debounce
     // delay, so take it as the actual current state:
 
@@ -76,16 +95,19 @@ void readButtons() {
     if (downReading != downButtonState) {
       downButtonState = downReading;
 
-      // only toggle the LED if the new button state is HIGH
-      //if (buttonState == HIGH) {
-      //  ledState = !ledState;
-      //}
+      // only count down if the new button state is HIGH
+      if (downButtonState == HIGH && setMode == HIGH) {
+        dur = dur - incr;
+        Serial.print("Counting down. New timer value: ");
+        Serial.println(dur);
+        tone(buzzerPin, downTone, downLength);
+      }
     }
   }
 
-    // save the reading. Next time through the loop, it'll be the lastButtonState:
+  // save the reading. Next time through the loop, it'll be the lastButtonState:
   lastStartButtonState = startReading;
-  lastStopButtonState = stopReading;
+  lastSetButtonState = setReading;
   lastUpButtonState = upReading;
   lastDownButtonState = downReading;
 }
