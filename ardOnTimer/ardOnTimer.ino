@@ -1,13 +1,16 @@
 
-#include "configuration.h";
-#include "buttons.h";
+#include "configuration.h"
+#include "buttons.h"
+#include "run.h"
+#include "set.h"
+#include "lcd.h"
 
 
 void setup() {
   // start LCD
   lcd.begin(lcdColumns, lcdRows);
-  // print name of this program and boot message to the LCD
-  lcd.setCursor(0, 0);
+  // print name of this program and boot message t  o the LCD
+  lcd.setCursor(0, 0);  
   lcd.print(programName);
   lcd.setCursor(0, 1);
   lcd.print("Booting ...");
@@ -27,7 +30,7 @@ void setup() {
 
   // start in- and outputs
   Serial.println("Starting in- and outputs...");
-  Serial.println();
+  Serial.println();https://rarbg.to/download.php?id=g1uc7vf&h=e99&f=21EroticAnal.19.04.06.Ivi.Rein.Youthful.Perfection.XXX.SD.MP4-KLEENEX-[rarbg.to].torrent
 
   pinMode(startButtonPin, INPUT);
   pinMode(setButtonPin, INPUT);
@@ -37,7 +40,6 @@ void setup() {
   pinMode(relayPin, OUTPUT);
 
   // set initial output states
-  //digitalWrite(buzzerPin, buzzerState);
   digitalWrite(relayPin, relayState);
 
   lcd.clear();
@@ -49,26 +51,21 @@ void loop() {
     Read buttons
   *******************************/
   readButtons();
-  /*
-  Serial.print("Start: ");
-  Serial.print(startButtonState);
-  Serial.print(", Set: ");
-  Serial.print(setButtonState);
-  Serial.print(", Up: ");
-  Serial.print(upButtonState);
-  Serial.print(", Down: ");
-  Serial.print(downButtonState);
-*/
 
-  // set the relay:
-  //digitalWrite(relayPin, relayState);
+  if(relayState == HIGH) {
+    runScreen();
+    countDown();
+  }
+  else if(setMode == HIGH) {
+    setScreen();
+    //setTime();
+  }
+  else {
+    waitScreen();
+  }
 
-  /*
-  Serial.print(", Buzzer: ");
-  Serial.print(buzzerState);
-  Serial.print(", Relay: ");
-  Serial.println(relayState);
-*/
+
+
 
 
 

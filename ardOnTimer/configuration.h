@@ -81,23 +81,50 @@ unsigned long debounceDelay = 20;    // the debounce time; increase if the outpu
  *******************************/
 const int startTone = 1500;
 const int startLength = 200;
-const int setTone = 1500;
-const int setLength = 400;
+
+const int stopTone = 1500;
+const int stopLength = 500;
+
+const int setTone = 1750;
+const int setLength = 200;
+
+const int storeTone = 1750;
+const int storeLength = 500;
+
 const int upTone = 2000;
 const int upLength = 100;
+
 const int downTone = 1000;
 const int downLength = 100;
 
+const int errorTone = 500;
+const int errorLength = 500;
+
+
 /*******************************
-   Tones
+   Times
  *******************************/
- int dur = 120; // timer on time
- const int incr = 10; // increments for counting up/down
+int dur = 5; // timer on time
+int timeLeft;
+
+int seconds;
+int h;
+int m;
+int s;
+int t;
+
+int lenm;
+int lens;
+
+int newDur = dur;
+const int incr = 10; // increments for counting up/down
+
+unsigned long startMillis;
+
+const int maxSeconds = 3599;
 
 /*******************************
    Misc
  *******************************/
+int counting = LOW;
 int setMode = LOW; // set mode on/off
-
-
- 
