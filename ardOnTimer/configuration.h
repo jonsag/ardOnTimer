@@ -4,6 +4,13 @@ String author = "Jon Sagebrand";
 String email = "jonsagebrand@gmail.com";
 
 /*******************************
+   EEPROM setup
+ *******************************/
+#include <EEPROM.h> // include EEPROM library
+const int eeAddr = 0; // address to store the time
+int f; // stores the time set in eeprom
+
+/*******************************
    LCD setup
  *******************************/
 // include the LCD library
@@ -41,23 +48,22 @@ const int setButtonPin = 9;
 const int upButtonPin = 10;
 const int downButtonPin = 11;
 
-int startButtonState;             // the current reading from the start button pin
+int startButtonState; // the current reading from the start/stop/store button pin
 int lastStartButtonState = LOW;
 
-int setButtonState;             // the current reading from the set button pin
+int setButtonState; // the current reading from the set button pin
 int lastSetButtonState = LOW;
 
-int upButtonState;             // the current reading from the up button pin
+int upButtonState; // the current reading from the up button pin
 int lastUpButtonState = LOW;
 
-int downButtonState;             // the current reading from the down button pin
+int downButtonState; // the current reading from the down button pin
 int lastDownButtonState = LOW;
 
 /*******************************
    Buzzer setup
  *******************************/
 const int buzzerPin = 12;
-int buzzerState = LOW;         // the current state of the buzzer pin
 
 /*******************************
    Relay setup
@@ -68,13 +74,12 @@ int relayState = LOW;         // the current state of the relay pin
 /*******************************
    Debouncing
  *******************************/
-// the following variables are unsigned longs because the time, measured in
-// milliseconds, will quickly become a bigger number than can be stored in an int.
-unsigned long lastStartDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long lastSetDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long lastUpDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long lastDownDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long debounceDelay = 20;    // the debounce time; increase if the output flickers
+unsigned long lastStartDebounceTime = 0; // the last time the output pin was toggled
+unsigned long lastSetDebounceTime = 0; // the last time the output pin was toggled
+unsigned long lastUpDebounceTime = 0; // the last time the output pin was toggled
+unsigned long lastDownDebounceTime = 0; // the last time the output pin was toggled
+
+unsigned long debounceDelay = 20; // the debounce time; increase if the output flickers
 
 /*******************************
    Tones
@@ -100,31 +105,29 @@ const int downLength = 100;
 const int errorTone = 500;
 const int errorLength = 500;
 
-
 /*******************************
    Times
  *******************************/
-int dur = 5; // timer on time
-int timeLeft;
+int dur = 180; // default timer on-time
+int timeLeft; // counts down when timer is running
 
-int seconds;
+int seconds; // for converting seconds to hours, minutes and seconds
 int h;
 int m;
 int s;
 int t;
 
-int lenm;
-int lens;
-
-int newDur = dur;
+int newDur = dur; // used when setting time
 const int incr = 10; // increments for counting up/down
 
-unsigned long startMillis;
+unsigned long startMillis; // used when timer is running
 
-const int maxSeconds = 3599;
+const int maxSeconds = 359999; // max allowed value for timer, in seconds, min is 1 second (359999 = 99 hrs, 59 min, 59 sec)
 
 /*******************************
    Misc
  *******************************/
-int counting = LOW;
-int setMode = LOW; // set mode on/off
+int counting = LOW; // HIGH when timer is running
+int setMode = LOW; // HIGH when in sewt mode
+
+timeOffset = 8; // where should time be printed on LCD

@@ -1,7 +1,7 @@
 
 void countDown() {
 
-  if (counting == LOW) {
+  if (counting == LOW) { // low when timer starts
     startMillis = millis();
     timeLeft = dur;
     counting = HIGH;
@@ -9,14 +9,14 @@ void countDown() {
     Serial.println(timeLeft);
   }
 
-  if (millis() - startMillis >= 1000) {
+  if (millis() - startMillis >= 1000) { // one second has elapsed
     timeLeft = timeLeft - 1;
     Serial.print("Time left: ");
     Serial.println(timeLeft);
     startMillis = millis();
   }
 
-  if (timeLeft <= 0) {
+  if (timeLeft <= 0) { // timer has run out
     relayState = LOW;
     lcd.clear();
     counting = LOW;

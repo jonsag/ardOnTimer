@@ -127,8 +127,7 @@ void readButtons() {
     }
   }
 
-  // save the reading. Next time through the loop, it'll be the lastButtonState:
-  lastStartButtonState = startReading;
+  lastStartButtonState = startReading; // save the reading
   lastSetButtonState = setReading;
   lastUpButtonState = upReading;
   lastDownButtonState = downReading;
