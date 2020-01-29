@@ -68,7 +68,7 @@ void setup() {
   else {
     Serial.print("Found time stored in eeprom: ");
     Serial.println(f);
-    Serial.println("Using it as set point temperature");
+    Serial.println("Using it for timer");
     Serial.println();
     dur = f; // else use it as set point
   }

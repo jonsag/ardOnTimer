@@ -130,4 +130,4 @@ const int maxSeconds = 359999; // max allowed value for timer, in seconds, min i
 int counting = LOW; // HIGH when timer is running
 int setMode = LOW; // HIGH when in sewt mode
 
-timeOffset = 8; // where should time be printed on LCD
+int timeOffset = 8; // where should time be printed on LCD

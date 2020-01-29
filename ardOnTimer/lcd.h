@@ -34,7 +34,7 @@ void secondsToHMS() { // converts seconds to hour, minutes and seconds
     lcd.print(m);
   }
   else {
-    lcd, print(" "); // prints space instead of first minute digit
+    lcd.print(" "); // prints space instead of first minute digit
     lcd.setCursor(timeOffset + 4, 0); // second minutes digit
   }
   lcd.setCursor(timeOffset + 5, 0); // colon after minutes
@@ -83,7 +83,7 @@ void runScreen() {
 /*******************************
     Set screen
   *******************************/
-  void setScreen() {
+void setScreen() {
   lcd.setCursor(0, 0);
   lcd.print("Set timer: ");
 
@@ -92,10 +92,9 @@ void runScreen() {
 
   lcd.setCursor(0, 1);
   lcd.print("Store,Exit or ");
-  lcd.setCursor(14,1);
-  lcd.write(24); // up arrow (ascii 24 or 30 is up arrow, ascii 25 or 31 is down arrow ascii 18 is up-down arrow, see http://www.martyncurrey.com/wp-content/uploads/2017/03/LCDs_12_CharSet_01.jpg) 
-  lcd.setCursor(15,1);
+  lcd.setCursor(14, 1);
+  lcd.write(24); // up arrow (ascii 24 or 30 is up arrow, ascii 25 or 31 is down arrow ascii 18 is up-down arrow, see http://www.martyncurrey.com/wp-content/uploads/2017/03/LCDs_12_CharSet_01.jpg)
+  lcd.setCursor(15, 1);
   lcd.write(25); // down arrow ()
-  // 
-  }
-  
+  //
+}
