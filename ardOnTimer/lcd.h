@@ -111,7 +111,7 @@ void runScreen() {
   // percent done: 100*(dur-timeLeft)/dur
   // how many squares should be used:
 
-  progress = (100 * (dur - timeLeft) / dur) // progress in percent
+  progress = (100 * (dur - timeLeft) / dur); // progress in percent
 
   for (int i = 0; i <= progress / 10; i++) { // prints one '-' for each 10 percent done
     lcd.setCursor(5 + i, 1);
@@ -126,7 +126,7 @@ void runScreen() {
   }
   else {
     if (smallStepProgress > 0 && smallStepProgress < 3) { // print one do
-      lcd.write(byte(0)); t
+      lcd.write(byte(0));
     }
     else if (smallStepProgress < 5) { // print two dots
       lcd.write(byte(1));
