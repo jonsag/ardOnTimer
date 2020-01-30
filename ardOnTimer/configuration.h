@@ -117,7 +117,7 @@ const int errorLength = 500;
 int dur = 180; // default timer on-time
 int timeLeft; // counts down when timer is running
 
-int seconds; // for converting seconds to hours, minutes and secondslcd.write(byte(7)); //print our custom char backslash
+int seconds; // for converting seconds to hours, minutes and seconds
 int h;
 int m;
 int s;
@@ -170,6 +170,57 @@ byte customBackslash[8] = {
   0b00000,
   0b00000
 };
+
+/*******************************
+   Progress bar
+ *******************************/
+ byte customOneDot[8] = {
+ 0b00000,
+  0b00000,
+  0b00000,
+  0b10000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
+byte customTwoDots[8] = {
+  0b00000,
+  0b00000,
+  0b00000,
+  0b11000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
+byte customThreeDots[8] = {
+  0b00000,
+  0b00000,
+  0b00000,
+  0b11100,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
+byte customFourDots[8] = {
+  0b00000,
+  0b00000,
+  0b00000,
+  0b11110,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
+int progress = 0; // percent done
+int smallStepProgress; // the remainder when first digit stripped from progress
+int i; // counter
 
 /*******************************
    Misc

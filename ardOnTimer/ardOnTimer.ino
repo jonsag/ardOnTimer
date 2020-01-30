@@ -81,6 +81,10 @@ void setup() {
   Serial.println("Building characters ...");
   Serial.println();
 
+  lcd.createChar(1, customOneDot);
+  lcd.createChar(2, customTwoDots);
+  lcd.createChar(3, customThreeDots);
+  lcd.createChar(4, customFourDots);
   lcd.createChar(5, customUpArrow);
   lcd.createChar(6, customDownArrow);
   lcd.createChar(7, customBackslash);
