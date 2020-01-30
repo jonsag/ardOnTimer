@@ -1,9 +1,7 @@
-
-#include "configuration.h" // holds all variables
+#include "configuration.h" // sets all variables
 #include "buttons.h" // handles the button presses
-#include "run.h" // handles the timer
-#include "set.h" // nothing here at the moment
 #include "lcd.h" // manages all info om LCD
+#include "run.h" // handles the timer function
 
 
 void setup() {
@@ -94,15 +92,4 @@ void loop() {
   else {
     waitScreen();
   }
-
-
-
-
-
-
-
-
-
-
-
 }

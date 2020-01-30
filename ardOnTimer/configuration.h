@@ -48,17 +48,23 @@ const int setButtonPin = 9;
 const int upButtonPin = 10;
 const int downButtonPin = 11;
 
+int startButtonReading;
 int startButtonState; // the current reading from the start/stop/store button pin
 int lastStartButtonState = LOW;
 
+int setButtonReading;
 int setButtonState; // the current reading from the set button pin
 int lastSetButtonState = LOW;
 
+int upButtonReading;
 int upButtonState; // the current reading from the up button pin
 int lastUpButtonState = LOW;
+unsigned long repeatUpButton; // when was the button pressed
 
+int downButtonReading;
 int downButtonState; // the current reading from the down button pin
 int lastDownButtonState = LOW;
+unsigned long repeatDownButton; // when was the button pressed
 
 /*******************************
    Buzzer setup
@@ -118,7 +124,10 @@ int s;
 int t;
 
 int newDur = dur; // used when setting time
-const int incr = 10; // increments for counting up/down
+const int incr1 = 10; // increments for counting up/down
+const int incr2 = 60;
+
+int repeatTime = 500; // time to hold button down for increased speed
 
 unsigned long startMillis; // used when timer is running
 

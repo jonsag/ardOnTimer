@@ -1,162 +1,57 @@
-
+#include "buttonActions.h" // makes buttons do something
 
 void readButtons() {
-  // read the state of the switch into a local variable:
-  int startReading = digitalRead(startButtonPin);
-  int setReading = digitalRead(setButtonPin);
-  int upReading = digitalRead(upButtonPin);
-  int downReading = digitalRead(downButtonPin);
+  startButtonReading = digitalRead(startButtonPin); // read the state of the switches into a local variable
+  setButtonReading = digitalRead(setButtonPin);
+  upButtonReading = digitalRead(upButtonPin);
+  downButtonReading = digitalRead(downButtonPin);
 
   /*******************************
     Start/Stop/Store button
   *******************************/
-  if (startReading != lastStartButtonState) {
+  if (startButtonReading != lastStartButtonState) {
     lastStartDebounceTime = millis();
   }
 
   if ((millis() - lastStartDebounceTime) > debounceDelay) {
-    if (startReading != startButtonState) {
-      startButtonState = startReading;
-
-      if (startButtonState == HIGH && setMode == LOW) {
-        relayState = !relayState;
-        if (relayState == HIGH) {
-          Serial.println("Starting timer");
-          tone(buzzerPin, startTone, startLength);
-          lcd.clear();
-        }
-        else {
-          Serial.println("Stopping timer");
-          Serial.println();
-          counting = LOW;
-          tone(buzzerPin, stopTone, stopLength);
-          lcd.clear();
-        }
-        digitalWrite(relayPin, relayState);
-      }
-      else if (startButtonState == HIGH && setMode == HIGH) {
-        dur = newDur;
-        Serial.println("Stored new value");
-        lcd.setCursor(0, 1);
-        lcd.print("Stored          ");
-        tone(buzzerPin, storeTone, storeLength);
-        delay(storeLength);
-      }
-    }
+    startButtonAction();
   }
 
   /*******************************
     Set button
   *******************************/
-  if (setReading != lastSetButtonState) {
+  if (setButtonReading != lastSetButtonState) {
     lastSetDebounceTime = millis();
   }
 
   if ((millis() - lastSetDebounceTime) > debounceDelay) {
-
-    if (setReading != setButtonState) {
-      setButtonState = setReading;
-
-      if (setButtonState == HIGH && relayState == LOW) {
-        setMode = !setMode;
-        newDur = dur;
-        if (setMode == HIGH) {
-          Serial.println("Entering set mode");
-        }
-        else {
-          Serial.println("Exiting set mode");
-          Serial.println();
-        }
-        lcd.clear();
-        tone(buzzerPin, setTone, setLength);
-      }
-    }
+    setButtonAction();
   }
 
   /*******************************
     Up button
   *******************************/
-  if (upReading != lastUpButtonState) {
+  if (upButtonReading != lastUpButtonState) {
     lastUpDebounceTime = millis();
   }
 
   if ((millis() - lastUpDebounceTime) > debounceDelay) {
-
-    if (upReading != upButtonState) {
-      upButtonState = upReading;
-
-      if (upButtonState == HIGH && setMode == HIGH) {
-        if (newDur + incr < maxSeconds) {
-          newDur = newDur + incr;
-          Serial.print("Counting up. New timer value: ");
-          Serial.println(dur);
-          tone(buzzerPin, upTone, upLength);
-        }
-        else {
-          Serial.println("Value too high. Can't increase");
-          tone(buzzerPin, errorTone, errorLength);
-        }
-      }
-    }
+    upButtonAction();
   }
 
   /*******************************
     Down button
   *******************************/
-  if (downReading != lastDownButtonState) {
+  if (downButtonReading != lastDownButtonState) {
     lastDownDebounceTime = millis();
   }
 
   if ((millis() - lastDownDebounceTime) > debounceDelay) {
-
-    if (downReading != downButtonState) {
-      downButtonState = downReading;
-
-      if (downButtonState == HIGH && setMode == HIGH) {
-        if (newDur - incr  > 0 ) {
-          newDur = newDur - incr;
-          Serial.print("Counting down. New timer value: ");
-          Serial.println(dur);
-          tone(buzzerPin, downTone, downLength);
-        }
-        else {
-          Serial.println("Value too low. Can't decrease");
-          tone(buzzerPin, errorTone, errorLength);
-        }
-      }
-    }
+    downButtonAction();
   }
 
-  lastStartButtonState = startReading; // save the reading
-  lastSetButtonState = setReading;
-  lastUpButtonState = upReading;
-  lastDownButtonState = downReading;
-}
-
-
-int Pushbutton(){ 
-  if (millis() - buttontimeout >20){   //only read the analog line every 20ms. I had problems reading it more frequently.
-   buttontimeout = millis();
-   leftbuttons = analogRead(A5);
-    
-    button = 0;
-    if (leftbuttons <785 && leftbuttons>745) button = 1; //LH Button 1 is pushed
-    if (leftbuttons <630 && leftbuttons>590) button = 2; //LH Button 2 is pushed
-      
-    if (button != oldbutton){
-      oldbutton = button;
-      if ( button !=0){
-      repeatbutton = millis();
-      return button;  
-      }
-    }
-    
-    
-
-  if (millis()- repeatbutton > 500){
-     repeatbutton = millis();
-     return button;
-     
-   } 
-  }
+  lastStartButtonState = startButtonReading; // save all readings
+  lastSetButtonState = setButtonReading;
+  lastUpButtonState = upButtonReading;
+  lastDownButtonState = downButtonReading;
 }
