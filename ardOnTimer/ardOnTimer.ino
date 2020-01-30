@@ -18,7 +18,8 @@ void setup() {
     Start serial
   *******************************/
   lcd.setCursor(0, 1);
-  lcd.print("Starting serial ...");
+  lcd.print("Starting serial ");
+  
   Serial.begin(9600);
 
   Serial.println(programName); // print information
@@ -31,7 +32,10 @@ void setup() {
   /*******************************
     Define in- and outputs
   *******************************/
+  lcd.setCursor(0, 1);
+  lcd.print("Starting in/out ");
   Serial.println("Starting in- and outputs...");
+  Serial.println();
 
   pinMode(startButtonPin, INPUT);
   pinMode(setButtonPin, INPUT);
@@ -40,15 +44,15 @@ void setup() {
   pinMode(buzzerPin, OUTPUT);
   pinMode(relayPin, OUTPUT);
 
-  // set initial output states
-  digitalWrite(relayPin, relayState);
+  digitalWrite(relayPin, relayState);   // set initial output states
 
   /*******************************
     Read time value from eeprom
   *******************************/
-  Serial.println("Reading last time from eeprom ...");
   lcd.setCursor(0, 1);
-  lcd.print("Reading last time ...");
+  lcd.print("Reading EEPROM  ");
+  Serial.println("Reading last time from eeprom ...");
+
   f = 0.00f;
   EEPROM.get(eeAddr, f); // read time from eeprom
   Serial.print("Found time: ");
@@ -64,12 +68,22 @@ void setup() {
     EEPROM.put(eeAddr, dur); // if not, store the predefined time
   }
   else {
-    Serial.print("Found time stored in eeprom: ");
-    Serial.println(f);
     Serial.println("Using it for timer");
     Serial.println();
     dur = f; // else use it as set point
   }
+
+  /*******************************
+      Build custom characters
+    *******************************/
+  lcd.setCursor(0, 1);
+  lcd.print("Building chars  ");
+  Serial.println("Building characters ...");
+  Serial.println();
+
+  lcd.createChar(5, customUpArrow);
+  lcd.createChar(6, customDownArrow);
+  lcd.createChar(7, customBackslash);
 
   lcd.clear();
 

@@ -9,6 +9,7 @@ void startButtonAction() {
     if (startButtonState == HIGH && setMode == LOW) {
       relayState = !relayState;
       if (relayState == HIGH) {
+        animationMillis = millis();
         Serial.println("Starting timer");
         tone(buzzerPin, startTone, startLength);
         lcd.clear();
@@ -24,6 +25,7 @@ void startButtonAction() {
     }
     else if (startButtonState == HIGH && setMode == HIGH) {
       dur = newDur;
+      EEPROM.put(eeAddr, dur); // write new time to eeprom
       Serial.println("Stored new value");
       lcd.setCursor(0, 1);
       lcd.print("Stored          ");
@@ -64,8 +66,10 @@ void upButtonAction() {
         if (newDur + incr2 < maxSeconds) { // we're under max allowed value
           newDur = newDur + incr2;
           repeatUpButton = millis();
-          Serial.print("Counting up. New timer value: ");
-          Serial.println(dur);
+          Serial.print("Counting up ");
+          Serial.print(incr2);
+          Serial.print(" seconds. New timer value: ");
+          Serial.println(newDur);
           tone(buzzerPin, upTone, upLength);
         }
         else {
@@ -82,8 +86,10 @@ void upButtonAction() {
 
       if (newDur + incr1 < maxSeconds) { // we're under max allowed value
         newDur = newDur + incr1; // increase time
-        Serial.print("Counting up. New timer value: ");
-        Serial.println(dur);
+        Serial.print("Counting up ");
+          Serial.print(incr1);
+          Serial.print(" seconds. New timer value: ");
+        Serial.println(newDur);
         tone(buzzerPin, upTone, upLength);
       }
       else {
@@ -100,14 +106,16 @@ void upButtonAction() {
 void downButtonAction() {
   if (downButtonState == HIGH && setMode == HIGH && millis() - repeatDownButton > repeatTime) {
         if (newDur - incr2 >  0) { // we're over min allowed value
-          newDur = newDur + incr2;
+          newDur = newDur - incr2;
           repeatDownButton = millis();
-          Serial.print("Counting up. New timer value: ");
-          Serial.println(dur);
-          tone(buzzerPin, upTone, upLength);
+          Serial.print("Counting down ");
+          Serial.print(incr2);
+          Serial.print(" seconds. New timer value: ");
+          Serial.println(newDur);
+          tone(buzzerPin, downTone, downLength);
         }
         else {
-          Serial.println("Value too high. Can't increase");
+          Serial.println("Value too low. Can't decrease");
           tone(buzzerPin, errorTone, errorLength);
         }
       }
@@ -116,10 +124,14 @@ void downButtonAction() {
     downButtonState = downButtonReading;
 
     if (downButtonState == HIGH && setMode == HIGH) {
+      repeatDownButton = millis();
+      
       if (newDur - incr1  > 0) { // we're over min allowed value
         newDur = newDur - incr1;
-        Serial.print("Counting down. New timer value: ");
-        Serial.println(dur);
+        Serial.print("Counting down ");
+          Serial.print(incr1);
+          Serial.print(" seconds. New timer value: ");
+        Serial.println(newDur);
         tone(buzzerPin, downTone, downLength);
       }
       else {

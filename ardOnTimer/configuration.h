@@ -1,5 +1,5 @@
 String programName = "ardOnTimer";
-String date = "20200126";
+String date = "20200130";
 String author = "Jon Sagebrand";
 String email = "jonsagebrand@gmail.com";
 
@@ -69,12 +69,12 @@ unsigned long repeatDownButton; // when was the button pressed
 /*******************************
    Buzzer setup
  *******************************/
-const int buzzerPin = 12;
+const int buzzerPin = 13;
 
 /*******************************
    Relay setup
  *******************************/
-const int relayPin = 13;
+const int relayPin = 12;
 int relayState = LOW;         // the current state of the relay pin
 
 /*******************************
@@ -117,7 +117,7 @@ const int errorLength = 500;
 int dur = 180; // default timer on-time
 int timeLeft; // counts down when timer is running
 
-int seconds; // for converting seconds to hours, minutes and seconds
+int seconds; // for converting seconds to hours, minutes and secondslcd.write(byte(7)); //print our custom char backslash
 int h;
 int m;
 int s;
@@ -131,7 +131,45 @@ int repeatTime = 500; // time to hold button down for increased speed
 
 unsigned long startMillis; // used when timer is running
 
-const int maxSeconds = 359999; // max allowed value for timer, in seconds, min is 1 second (359999 = 99 hrs, 59 min, 59 sec)
+unsigned long animationMillis; // for animation in run screen
+
+const unsigned int maxSeconds = 35999 - incr2; // max allowed value for timer, in seconds, min is 1 second (35999 = 9 hrs, 59 min, 59 sec, 65535 = 18 hrs, 12 min, 15 sec)
+
+/*******************************
+   Custom characters
+ *******************************/
+ byte customUpArrow[8] = {
+ 0b00100,
+  0b01110,
+  0b10101,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00000
+};
+
+byte customDownArrow[8] = {
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b10101,
+  0b01110,
+  0b00100,
+  0b00000
+};
+
+byte customBackslash[8] = {
+  0b00000,
+  0b10000,
+  0b01000,
+  0b00100,
+  0b00010,
+  0b00001,
+  0b00000,
+  0b00000
+};
 
 /*******************************
    Misc

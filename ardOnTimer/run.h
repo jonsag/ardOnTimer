@@ -6,13 +6,15 @@ void countDown() {
     timeLeft = dur;
     counting = HIGH;
     Serial.print("Time left: ");
-    Serial.println(timeLeft);
+    Serial.print(timeLeft);
+    Serial.println(" seconds");
   }
 
   if (millis() - startMillis >= 1000) { // one second has elapsed
     timeLeft = timeLeft - 1;
     Serial.print("Time left: ");
-    Serial.println(timeLeft);
+    Serial.print(timeLeft);
+    Serial.println(" seconds");
     startMillis = millis();
   }
 
