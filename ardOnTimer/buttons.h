@@ -132,3 +132,31 @@ void readButtons() {
   lastUpButtonState = upReading;
   lastDownButtonState = downReading;
 }
+
+
+int Pushbutton(){ 
+  if (millis() - buttontimeout >20){   //only read the analog line every 20ms. I had problems reading it more frequently.
+   buttontimeout = millis();
+   leftbuttons = analogRead(A5);
+    
+    button = 0;
+    if (leftbuttons <785 && leftbuttons>745) button = 1; //LH Button 1 is pushed
+    if (leftbuttons <630 && leftbuttons>590) button = 2; //LH Button 2 is pushed
+      
+    if (button != oldbutton){
+      oldbutton = button;
+      if ( button !=0){
+      repeatbutton = millis();
+      return button;  
+      }
+    }
+    
+    
+
+  if (millis()- repeatbutton > 500){
+     repeatbutton = millis();
+     return button;
+     
+   } 
+  }
+}
