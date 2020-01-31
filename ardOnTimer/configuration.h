@@ -115,7 +115,7 @@ const int errorLength = 500;
    Times
  *******************************/
 int dur = 180; // default timer on-time
-int timeLeft; // counts down when timer is running
+int timeLeft = dur; // counts down when timer is running
 
 int seconds; // for converting seconds to hours, minutes and seconds
 int h;

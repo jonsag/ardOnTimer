@@ -79,18 +79,18 @@ void runScreen() {
   lcd.setCursor(0, 0);
   lcd.print("Run ");
 
-  if (millis() - animationMillis >= 4000) { // run animation
+  if (millis() - animationMillis >= 2000) { // run animation
     animationMillis = millis();
   }
 
   lcd.setCursor(4, 0);
-  if (millis() - animationMillis >= 3000) {
+  if (millis() - animationMillis >= 1500) {
     lcd.print("/");
   }
-  else if (millis() - animationMillis >= 2000) {
+  else if (millis() - animationMillis >= 1000) {
     lcd.print("|");
   }
-  else if (millis() - animationMillis >= 1000) {
+  else if (millis() - animationMillis >= 500) {
     //lcd.print("\\");
     lcd.write(byte(7)); //print our custom char backslash
   }
@@ -113,41 +113,33 @@ void runScreen() {
 
   progress = (100 * (dur - timeLeft) / dur); // progress in percent
 
-  for (int i = 0; i <= progress / 10; i++) { // prints one '-' for each 10 percent done
+  for (int i = 0; i <= (progress / 10); i++) { // prints one '-' for each 10 percent done
     lcd.setCursor(5 + i, 1);
     lcd.print("-");
   }
 
-  lcd.setCursor(6 + i, 1); // print a dot for every other 2 percent done
-  smallStepProgress = progress - progress / 10;
-  
-  if (smallStepProgress = 0) {
-    lcd.print(">"); // last position is always a '>'
+  lcd.setCursor(5 + i + progress / 10, 1); // print a dot for every other 2 percent done
+  smallStepProgress = (progress % 10);
+
+  if (smallStepProgress <  2) { // no dots
+    lcd.print(">          "); // last position is always a '>'
   }
   else {
-    if (smallStepProgress > 0 && smallStepProgress < 3) { // print one do
-      lcd.write(byte(0));
+    if (smallStepProgress > 7) { // print four dots
+      lcd.write(byte(4));
     }
-    else if (smallStepProgress < 5) { // print two dots
-      lcd.write(byte(1));
-    }
-    else if (smallStepProgress < 7) { // print three dots
-      lcd.write(byte(2));
-    }
-    else if (smallStepProgress < 9) { // print four dots
+    else if (smallStepProgress > 5) { // print three dots
       lcd.write(byte(3));
     }
-    else { // print minus sign
-      lcd.print("-");
+    else if (smallStepProgress > 3) { // print two dots
+      lcd.write(byte(2));
     }
-    lcd.setCursor(7 + i, 1);
-    lcd.print(">"); // last position is always a '
+    else if (smallStepProgress > 1) { // print one dot
+      lcd.write(byte(1));
+    }
+    lcd.setCursor(6 + i + progress / 10, 1);
+    lcd.print(">          "); // last position is always a '>'
   }
-
-
-
-
-
 }
 
 /*******************************
@@ -169,74 +161,3 @@ void setScreen() {
   //lcd.print("D"); // down arrow ()
   lcd.write(byte(6)); //print our custom down arrow
 }
-
-/*#include <LiquidCrystal.h>
-
-  LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-
-  byte percentage_1[8] = { B10000, B10000, B10000, B10000, B10000, B10000, B10000, B10000 };
-  byte percentage_2[8] = { B11000, B11000, B11000, B11000, B11000, B11000, B11000, B11000 };
-  byte percentage_3[8] = { B11100, B11100, B11100, B11100, B11100, B11100, B11100, B11100 };
-  byte percentage_4[8] = { B11110, B11110, B11110, B11110, B11110, B11110, B11110, B11110 };
-  byte percentage_5[8] = { B11111, B11111, B11111, B11111, B11111, B11111, B11111, B11111 };
-
-  void setup() {
-
-  lcd.createChar(0, percentage_1);
-  lcd.createChar(1, percentage_2);
-  lcd.createChar(2, percentage_3);
-  lcd.createChar(3, percentage_4);
-  lcd.createChar(4, percentage_5);
-
-  lcd.begin(16, 2);
-  lcd.clear();
-  }
-
-  void loop() {
-
-  for(int i = 0; i <= 100; i++){
-    lcd.setCursor(0,0);
-    lcd.print("Loading :");
-    lcd.print(i);
-    lcd.print("%");
-    lcd_percentage(i, 0, 16, 1);
-    delay(10);
-  }
-
-  lcd.clear();
-
-  }
-
-  void lcd_percentage(int percentage, int cursor_x, int cursor_x_end, int cursor_y){
-
-  int calc = (percentage*cursor_x_end*5/100)-(percentage*cursor_x*5/100);
-  while(calc >= 5){
-    lcd.setCursor(cursor_x,cursor_y);
-    lcd.write((byte)4);
-    calc-=5;
-    cursor_x++;
-  }
-  while(calc >= 4 && calc < 5){
-    lcd.setCursor(cursor_x,cursor_y);
-    lcd.write((byte)3);
-    calc-=4;
-
-  }
-  while(calc >= 3 && calc < 4){
-    lcd.setCursor(cursor_x,cursor_y);
-    lcd.write((byte)2);
-    calc-=3;
-  }
-  while(calc >= 2 && calc < 3){
-    lcd.setCursor(cursor_x,cursor_y);
-    lcd.write((byte)1);
-    calc-=2;
-  }
-  while(calc >= 1 && calc < 2){
-    lcd.setCursor(cursor_x,cursor_y);
-    lcd.write((byte)0);
-    calc-=1;
-  }
-
-  }
-*/
