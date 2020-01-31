@@ -43,6 +43,6 @@ Set screen
 Setting timer.  
 
 * Start/Stop/Store button to store set time.  
-* Set button to exit back to standby screen. If set time was not, previous time will be used.  
-* Up or Down button to increase/decrease time. Each press adds/subtracts 10 seconds from time. Long press adds/subtracts one minute from time. Holding buttons keeps stepping minutes.  
+* Set button to exit back to standby screen. If set time was not stored, previous time will be used.  
+* Up or Down button to increase/decrease time. Each press adds/subtracts 10 seconds from time. Long press adds/subtracts one minute from time. Holding down button keeps stepping minutes.  
 
