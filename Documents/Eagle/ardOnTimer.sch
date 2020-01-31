@@ -6182,21 +6182,21 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <junction x="172.72" y="149.86"/>
 </segment>
 </net>
-<net name="N$19" class="0">
-<segment>
-<pinref part="SV3" gate="G$1" pin="SIG"/>
-<wire x1="170.18" y1="63.5" x2="241.3" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="B1" gate="G$1" pin="D13"/>
-<wire x1="147.32" y1="101.6" x2="170.18" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="170.18" y1="101.6" x2="170.18" y2="63.5" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$2" class="0">
 <segment>
-<pinref part="B1" gate="G$1" pin="D12"/>
-<wire x1="147.32" y1="104.14" x2="236.22" y2="104.14" width="0.1524" layer="91"/>
-<wire x1="236.22" y1="104.14" x2="236.22" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="B1" gate="G$1" pin="D13"/>
+<wire x1="147.32" y1="101.6" x2="236.22" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="SG1" gate="G$1" pin="1"/>
+<wire x1="236.22" y1="101.6" x2="236.22" y2="93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<pinref part="B1" gate="G$1" pin="D12"/>
+<wire x1="147.32" y1="104.14" x2="233.68" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="104.14" x2="233.68" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="SV3" gate="G$1" pin="SIG"/>
+<wire x1="233.68" y1="63.5" x2="241.3" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
