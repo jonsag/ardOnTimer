@@ -25,7 +25,10 @@ void startButtonAction() {
     }
     else if (startButtonState == HIGH && setMode == HIGH) {
       dur = newDur;
+      timeLeft = dur;
+      
       EEPROM.put(eeAddr, dur); // write new time to eeprom
+      
       Serial.println("Stored new value");
       lcd.setCursor(0, 1);
       lcd.print("Stored          ");
