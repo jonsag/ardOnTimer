@@ -4,6 +4,12 @@
 
   (paper "A4")
 
+  (title_block
+    (title "ardOnTImer-ATmega")
+    (date "2022-09-09")
+    (rev "0.2")
+  )
+
   (lib_symbols
     (symbol "Device:Buzzer" (pin_names (offset 0.0254) hide) (in_bom yes) (on_board yes)
       (property "Reference" "BZ" (id 0) (at 3.81 1.27 0)

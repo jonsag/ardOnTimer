@@ -5,6 +5,12 @@
   )
 
   (paper "A4")
+  (title_block
+    (title "ardOnTImer-ATmega")
+    (date "2022-09-09")
+    (rev "0.2")
+  )
+
   (layers
     (0 "F.Cu" signal)
     (31 "B.Cu" signal)
@@ -2106,7 +2112,7 @@
   (gr_text "Down" (at 200.66 110.49) (layer "F.SilkS") (tstamp 4d29b245-26a3-4d0c-bbf4-77b23bda2d63)
     (effects (font (size 1 1) (thickness 0.15)) (justify left))
   )
-  (gr_text "ardOnTimer-atmega-0.2\nDesign: Jon Sagebrand\ngithub.com/jonsag" (at 115.57 105.41 90) (layer "F.SilkS") (tstamp 95e768d2-efc6-4fb6-b5ba-c10c1ce2b6c9)
+  (gr_text "${TITLE}-${REVISION}\nDesign: Jon Sagebrand\ngithub.com/jonsag" (at 115.57 105.41 90) (layer "F.SilkS") (tstamp 95e768d2-efc6-4fb6-b5ba-c10c1ce2b6c9)
     (effects (font (size 1 1) (thickness 0.15)) (justify left))
   )
   (gr_text "Up" (at 200.66 105.41) (layer "F.SilkS") (tstamp bdd029ec-57ef-4c96-8087-52b7d1273751)
